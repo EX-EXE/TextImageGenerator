@@ -6,7 +6,7 @@
 
     <Authors>EX-EXE</Authors>
     <Owners>EX-EXE</Owners>
-    <PackageProjectUrl>https://github.com/EX-EXE/CopyFileUtility</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/EX-EXE/TextImageGenerator</PackageProjectUrl>
     <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
