@@ -9,17 +9,17 @@ TextImageGenerator.App.exe -Output:./Test.png -Text:TestText -Width:512 -Height:
 ## Parameter
 | Parameter | Description | Example |
 |---|---|---|
-|Output||-Output:./Test.png|
-|Width||-Width:1024|
-|Height||-Height:1024|
-|Text||-Text:ABCDE\nあいうえお\n01234|
+|Output|Destination for image file.|-Output:./Test.png|
+|Width|Image width|-Width:1024|
+|Height|Image width|-Height:1024|
+|Text|Text to write to the image.[new line is \n]|-Text:ABCDE\nあいうえお\n01234|
 |ColorType||-ColorType:Bgra8888|
 |AlphaType||-AlphaType:Premul|
-|Format||-Format:png|
-|Quality||-Quality:100|
-|BackgroundColor||-BackgroundColor:00000000|
-|TextColor||-TextColor:FFFFFFFF|
-|OutlineColor||-OutlineColor:000000FF|
+|Format|Image Format[png or jpg]|-Format:png|
+|Quality|Jpg Quality|-Quality:100|
+|BackgroundColor|[RGBA]|-BackgroundColor:00000000|
+|TextColor|[RGBA]|-TextColor:FFFFFFFF|
+|OutlineColor|[RGBA]|-OutlineColor:000000FF|
 |LineHeights||-LineHeights:100,-1,200|
 |OutlineSize||-OutlineSize:10.0|
 |Font||-Font:Meiryo|
