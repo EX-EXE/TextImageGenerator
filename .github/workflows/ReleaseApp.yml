@@ -87,7 +87,7 @@ jobs:
         id: zip-release-asset 
         run: |
            cd /tmp/release/ 
-           zip -rv Release.zip ${{ env.RUNTIME }}
+           zip -rv /tmp/release/${{ env.RUNTIME }}.zip ${{ env.RUNTIME }}
           
       - name: Upload Release Asset
         id: upload-release-asset 
@@ -96,7 +96,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_asset.outputs.download-path }}/Release.zip
-          asset_name: Release.zip
+          asset_path: /tmp/release/${{ env.RUNTIME }}.zip
+          asset_name: win-x64.zip
           asset_content_type: application/zip
       
