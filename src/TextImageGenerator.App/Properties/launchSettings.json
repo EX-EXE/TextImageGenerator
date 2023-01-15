@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TextImageGenerator.App": {
+      "commandName": "Project",
+      "commandLineArgs": " -Licence:  -Width:1024               -Height: 1024               -Text: abc\\nassdsあいうえおad  -ColorType: Bgra8888               -AlphaType: Premul -Format: png              -Quality: 100                -BackgroundColor:  00000000             -TextColor:  FFFFFFCC             -OutlineColor:  000000FF -OutlineSize:10.0               -Font: Meiryo     -LineHeights: 30,-1          -TextScale: 1.0 -Output:./Test.png"
+    }
+  }
+}
