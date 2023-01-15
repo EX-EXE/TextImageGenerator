@@ -83,6 +83,12 @@ jobs:
           name: ${{ env.RUNTIME }}
           path: /tmp/release/${{ env.RUNTIME }}/ 
           
+      - name: Zip Release Asset
+        id: zip-release-asset 
+        run: |
+           cd /tmp/release/ 
+           zip -rv Release.zip ${{ env.RUNTIME }}
+          
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
@@ -90,7 +96,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_asset.outputs.download-path }}/BufferCopy.exe
-          asset_name: BufferCopy.exe
-          asset_content_type: application/octet-stream
+          asset_path: ${{ steps.download_asset.outputs.download-path }}/Release.zip
+          asset_name: Release.zip
+          asset_content_type: application/zip
       
