@@ -36,7 +36,7 @@ jobs:
       run: dotnet restore
       
     - name: Publish
-      run: dotnet publish ./src/TextImageGenerator.App/ -c release --self-contained -p:Version=${{ env.VERSION }} -r ${{ env.RUNTIME }} -o /tmp/publish/${{ env.RUNTIME }}/
+      run: dotnet publish ./src/TextImageGenerator.App/ -c release --self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:Version=${{ env.VERSION }} -r ${{ env.RUNTIME }} -o /tmp/publish/${{ env.RUNTIME }}/
       
     - name: Upload
       uses: actions/upload-artifact@v3
