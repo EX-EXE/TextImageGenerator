@@ -82,13 +82,7 @@ jobs:
         with:
           name: ${{ env.RUNTIME }}
           path: /tmp/release/${{ env.RUNTIME }}/ 
-          
-      - name: Zip Release Asset
-        id: zip-release-asset 
-        run: |
-           cd /tmp/release/ 
-           zip -rv /tmp/release/${{ env.RUNTIME }}.zip ${{ env.RUNTIME }}
-          
+
       - name: Upload Release Asset
         id: upload-release-asset 
         uses: actions/upload-release-asset@v1
@@ -96,7 +90,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/release/${{ env.RUNTIME }}.zip
-          asset_name: win-x64.zip
-          asset_content_type: application/zip
+          asset_path: ${{ steps.download_asset.outputs.download-path }}/TextImageGenerator.App.exe
+          asset_name: TextImageGenerator.exe
+          asset_content_type: application/octet-stream
+
+#      - name: Zip Release Asset
+#        id: zip-release-asset 
+#        run: |
+#           cd /tmp/release/ 
+#           zip -rv /tmp/release/${{ env.RUNTIME }}.zip ${{ env.RUNTIME }}
+#          
+#      - name: Upload Release Asset
+#        id: upload-release-asset 
+#        uses: actions/upload-release-asset@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          upload_url: ${{ steps.create_release.outputs.upload_url }}
+#          asset_path: /tmp/release/${{ env.RUNTIME }}.zip
+#          asset_name: win-x64.zip
+#          asset_content_type: application/zip
       
