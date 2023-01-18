@@ -9,6 +9,12 @@ namespace TextImageGenerator
         public TextImageColor()
         {
         }
+
+        public static TextImageColor Create(string hex)
+        {
+            return new TextImageColor(hex);
+        }
+
         public TextImageColor(string hex)
         {
             var trimStr = hex.TrimStart('#');

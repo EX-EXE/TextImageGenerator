@@ -6,7 +6,7 @@ namespace TextImageGenerator
     {
         public static void GenerateFile(string outputFilePath, TextImageContent content)
         {
-            if(string.IsNullOrWhiteSpace(outputFilePath))
+            if (string.IsNullOrWhiteSpace(outputFilePath))
             {
                 throw new ArgumentException("outputFilePath is NullOrWhiteSpace");
             }
@@ -84,26 +84,58 @@ namespace TextImageGenerator
             var topY = 0.0f;
             foreach (var lineContent in content.Lines)
             {
+                // Position
                 var lineWidth = lineContent.LineWidth == TextImageLineText.AutoSize ? content.ImageWidth : lineContent.LineWidth;
                 var lineHeight = lineContent.LineHeight == TextImageLineText.AutoSize ? autoLineHeightSize : lineContent.LineHeight;
                 var lineMidY = topY + lineHeight / 2.0f;
                 topY += lineHeight;
 
-                var fontType = string.IsNullOrEmpty(lineContent.FontFamily) ? SKTypeface.CreateDefault() : SKTypeface.FromFamilyName(lineContent.FontFamily);
-                var textColor = new SKColor(lineContent.TextColor.Red, lineContent.TextColor.Green, lineContent.TextColor.Blue, lineContent.TextColor.Alpha);
-                var textPaint = new SKPaint { Typeface = fontType, IsAntialias = true, Style = SKPaintStyle.Fill, Color = textColor };
-                var outlineColor = new SKColor(lineContent.OutlineColor.Red, lineContent.OutlineColor.Green, lineContent.OutlineColor.Blue, lineContent.OutlineColor.Alpha);
-                var outlinePaint = new SKPaint { Typeface = fontType, IsAntialias = true, Style = SKPaintStyle.Stroke, StrokeWidth = lineContent.OutlineSize, Color = outlineColor };
+                // Font
+                var fontStyle = SKFontStyle.Normal;
+                if(lineContent.FontBold && lineContent.FontItalic)
+                {
+                    fontStyle = SKFontStyle.BoldItalic;
+                }
+                else if (lineContent.FontBold)
+                {
+                    fontStyle = SKFontStyle.Bold;
+                }
+                else if(lineContent.FontItalic)
+                {
+                    fontStyle = SKFontStyle.Italic;
+                }
+                var fontType = string.IsNullOrEmpty(lineContent.FontFamily) ? SKTypeface.CreateDefault() : SKTypeface.FromFamilyName(lineContent.FontFamily, fontStyle);
 
-                var calcTextSize = CalcTextSize(lineWidth, lineHeight, lineContent.LineText, outlinePaint) * lineContent.TextSizeScale;
+                // Color
+                var textColor = new SKColor(lineContent.TextColor.Red, lineContent.TextColor.Green, lineContent.TextColor.Blue, lineContent.TextColor.Alpha);
+                var outlineColor = new SKColor(lineContent.OutlineColor.Red, lineContent.OutlineColor.Green, lineContent.OutlineColor.Blue, lineContent.OutlineColor.Alpha);
+                
+                // Paint
+                var textPaint = new SKPaint { Typeface = fontType, IsAntialias = lineContent.Antialias, Style = SKPaintStyle.Fill, Color = textColor };
+                var outlinePaint = new SKPaint { Typeface = fontType, IsAntialias = lineContent.Antialias, Style = SKPaintStyle.Stroke, StrokeWidth = lineContent.OutlineSize, Color = outlineColor };
+
+                // Calc TextSize
+                var calcTextSize = 0.0f;
+                if(0 <= lineContent.TextSize)
+                {
+                    // Specified
+                    calcTextSize = lineContent.TextSize * lineContent.TextScale;
+                }
+                else
+                {
+                    // Auto
+                    calcTextSize = CalcTextSize(lineWidth, lineHeight, lineContent.Text, outlinePaint) * lineContent.TextScale;
+                }
                 textPaint.TextSize = calcTextSize;
                 outlinePaint.TextSize = calcTextSize;
 
+                // MeasureText
                 var previewTextBounds = new SKRect();
-                outlinePaint.MeasureText(lineContent.LineText, ref previewTextBounds);
+                outlinePaint.MeasureText(lineContent.Text, ref previewTextBounds);
 
-                canvas.DrawText(lineContent.LineText, midX - previewTextBounds.MidX, lineMidY - previewTextBounds.MidY, outlinePaint);
-                canvas.DrawText(lineContent.LineText, midX - previewTextBounds.MidX, lineMidY - previewTextBounds.MidY, textPaint);
+                // Draw
+                canvas.DrawText(lineContent.Text, midX - previewTextBounds.MidX, lineMidY - previewTextBounds.MidY, outlinePaint);
+                canvas.DrawText(lineContent.Text, midX - previewTextBounds.MidX, lineMidY - previewTextBounds.MidY, textPaint);
             }
         }
 

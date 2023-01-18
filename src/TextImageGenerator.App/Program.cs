@@ -1,11 +1,11 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
+﻿
 namespace TextImageGenerator.App
 {
     internal class Program
     {
         static readonly string ParamLicenceKey = "-Licence:";
 
+        // Image
         static readonly string ParamOutputKey = "-Output:";
 
         static readonly string ParamWidthKey = "-Width:";
@@ -19,149 +19,217 @@ namespace TextImageGenerator.App
         static readonly string ParamQualityKey = "-Quality:";
 
         static readonly string ParamBackgroundColorKey = "-BackgroundColor:";
+
+        // General
+        static readonly string ParamLineWidthKey = "-LineWidth:";
+        static readonly string ParamLineHeightKey = "-LineHeight:";
+
+        static readonly string ParamTextSizeKey = "-TextSize:";
+        static readonly string ParamOutlineSizeKey = "-OutlineSize:";
+        static readonly string ParamTextScaleKey = "-TextScale:";
+
+        static readonly string ParamAntialiasKey = "-Antialias:";
+        static readonly string ParamFontFamilyKey = "-FontFamily:";
+        static readonly string ParamFontBoldKey = "-FontBold:";
+        static readonly string ParamFontItalicKey = "-FontItalic:";
+
         static readonly string ParamTextColorKey = "-TextColor:";
         static readonly string ParamOutlineColorKey = "-OutlineColor:";
 
-        static readonly string ParamLineWidthsKey = "-LineeWidths:";
+        // Array
+        static readonly string ParamLineWidthsKey = "-LineWidths:";
         static readonly string ParamLineHeightsKey = "-LineHeights:";
-        static readonly string ParamFontKey = "-Font:";
-        static readonly string ParamTextScaleKey = "-TextScale:";
-        static readonly string ParamOutlineSizeKey = "-OutlineSize:";
+
+        static readonly string ParamTextSizesKey = "-TextSizes:";
+        static readonly string ParamOutlineSizesKey = "-OutlineSizes:";
+        static readonly string ParamTextScalesKey = "-TextScales:";
+
+        static readonly string ParamAntialiasesKey = "-Antialiases:";
+        static readonly string ParamFontFamiliesKey = "-FontFamilies:";
+        static readonly string ParamFontBoldsKey = "-FontBolds:";
+        static readonly string ParamFontItalicsKey = "-FontItalics:";
+
+        static readonly string ParamTextColorsKey = "-TextColors:";
+        static readonly string ParamOutlineColorsKey = "-OutlineColors:";
+
+
 
         static readonly string[] ParamKeys = new[]
         {
-            ParamLicenceKey          ,
-            ParamOutputKey           ,
-            ParamWidthKey            ,
-            ParamHeightKey           ,
-            ParamTextKey             ,
-            ParamColorTypeKey        ,
-            ParamAlphaTypeKey        ,
-            ParamFormatKey           ,
-            ParamQualityKey          ,
-            ParamBackgroundColorKey  ,
-            ParamTextColorKey        ,
-            ParamOutlineColorKey     ,
-            ParamLineWidthsKey       ,
-            ParamLineHeightsKey      ,
-            ParamFontKey             ,
-            ParamTextScaleKey        ,
-            ParamOutlineSizeKey      ,
+            ParamLicenceKey,
+
+            ParamOutputKey,
+            ParamWidthKey,
+            ParamHeightKey,
+            ParamTextKey,
+            ParamColorTypeKey,
+            ParamAlphaTypeKey,
+            ParamFormatKey,
+            ParamQualityKey,
+            ParamBackgroundColorKey,
+
+            ParamLineWidthKey,
+            ParamLineHeightKey,
+            ParamTextSizeKey,
+            ParamOutlineSizeKey,
+            ParamTextScaleKey,
+            ParamAntialiasKey,
+            ParamFontFamilyKey,
+            ParamFontBoldKey,
+            ParamFontItalicKey,
+            ParamTextColorKey,
+            ParamOutlineColorKey,
+
+            ParamLineWidthsKey,
+            ParamLineHeightsKey,
+            ParamTextSizesKey,
+            ParamOutlineSizesKey,
+            ParamTextScalesKey,
+            ParamAntialiasesKey,
+            ParamFontFamiliesKey,
+            ParamFontBoldsKey,
+            ParamFontItalicsKey,
+            ParamTextColorsKey,
+            ParamOutlineColorsKey,
         };
 
-        static void Main()
+        static int Main()
         {
+            var argParser = new ArgumentParser();
+            argParser.Init(Environment.CommandLine, ParamKeys);
+
             var args = ParseArgs();
-            if (args.ContainsKey(ParamLicenceKey))
+            if (argParser.ContainsKey(ParamLicenceKey))
             {
                 Licence.WriteLine();
             }
 
-            // Generate
+            // Param
             var content = new TextImageContent();
             var outputPath = string.Empty;
-            if (args.ContainsKey(ParamOutputKey))
             {
-                outputPath = args[ParamOutputKey];
-            }
-            if (args.ContainsKey(ParamWidthKey) && int.TryParse(args[ParamWidthKey], out var width))
-            {
-                content.ImageWidth = width;
-            }
-            if (args.ContainsKey(ParamHeightKey) && int.TryParse(args[ParamHeightKey], out var height))
-            {
-                content.ImageWidth = height;
-            }
-            if (args.ContainsKey(ParamTextKey))
-            {
-                var font = string.Empty;
-                var scale = 1.0f;
-                var outlineSize = 1.0f;
-                var textColor = new TextImageColor();
-                var outlineColor = new TextImageColor();
-                var lineHeights = new[] { TextImageLineText.AutoSize };
-                var lineWidths = new[] { TextImageLineText.AutoSize };
-                if (args.ContainsKey(ParamLineHeightsKey))
+                // Output
+                if (!argParser.TryGetString(ParamOutputKey, out outputPath))
                 {
-                    var heights = args[ParamLineHeightsKey].Split(",").Select(x => int.Parse(x)).ToArray();
-                    if (0 < heights.Length)
+                    Console.WriteLine($"Need parameter. {ParamOutputKey}<FilePath>");
+                    return 1;
+                }
+                // Text
+                var text = string.Empty;
+                if (!argParser.TryGetString(ParamTextKey, out text))
+                {
+                    Console.WriteLine($"Need parameter. {ParamTextKey}<Text>");
+                    return 1;
+                }
+
+                // Width
+                if (argParser.TryGetNumber(ParamWidthKey, out int imageWidth))
+                {
+                    content.ImageWidth = imageWidth;
+                }
+                else
+                {
+                    Console.WriteLine($"Need parameter. {ParamWidthKey}<Size>");
+                    return 1;
+                }
+                // Height
+                if (argParser.TryGetNumber(ParamHeightKey, out int imageHeight))
+                {
+                    content.ImageHeight = imageHeight;
+                }
+                else
+                {
+                    Console.WriteLine($"Need parameter. {ParamHeightKey}<Size>");
+                    return 1;
+                }
+                // ColorType
+                if (argParser.TryGetString(ParamColorTypeKey, out var colorType))
+                {
+                    content.ColorType = colorType;
+                }
+                // AlphaType
+                if (argParser.TryGetString(ParamAlphaTypeKey, out var alphaType))
+                {
+                    content.AlphaType = alphaType;
+                }
+                // Format
+                if (argParser.TryGetString(ParamFormatKey, out var format))
+                {
+                    content.EncodeFormat = format;
+                }
+                // Quality
+                if (argParser.TryGetNumber(ParamQualityKey, out int quality))
+                {
+                    content.EncodeQuality = quality;
+                }
+                // BackgroundColor
+                if (argParser.TryGetInstance(ParamBackgroundColorKey, out var backgroundColor, TextImageColor.Create))
+                {
+                    content.BackgroundColor = backgroundColor;
+                }
+
+                // Lines
+                var (isGeneralLineWidth, valueGeneralLineWidth) = (argParser.TryGetNumber(ParamLineWidthKey, out int generalLineWidth), generalLineWidth);
+                var (isGeneralLineHeight, valueGeneralLineHeight) = (argParser.TryGetNumber(ParamLineHeightKey, out int generalLineHeight), generalLineHeight);
+                var (isGeneralTextSize, valueGeneralTextSize) = (argParser.TryGetNumber(ParamTextSizeKey, out float generalTextSize), generalTextSize);
+                var (isGeneralOutlineSize, valueGeneralOutlineSize) = (argParser.TryGetNumber(ParamOutlineSizeKey, out float generalOutlineSize), generalOutlineSize);
+                var (isGeneralTextScale, valueGeneralTextScale) = (argParser.TryGetNumber(ParamTextScaleKey, out float generalTextScale), generalTextScale);
+                var (isGeneralAntialias, valueGeneralAntialias) = (argParser.TryGetBool(ParamAntialiasKey, out bool generalAntialias), generalAntialias);
+                var (isGeneralFontFamily, valueGeneralFontFamily) = (argParser.TryGetString(ParamFontFamilyKey, out string generalFontFamily), generalFontFamily);
+                var (isGeneralFontBold, valueGeneralFontBold) = (argParser.TryGetBool(ParamFontBoldKey, out bool generalFontBold), generalFontBold);
+                var (isGeneralFontItalic, valueGeneralFontItalic) = (argParser.TryGetBool(ParamFontItalicKey, out bool generalFontItalic), generalFontItalic);
+                var (isGeneralTextColor, valueGeneralTextColor) = (argParser.TryGetInstance(ParamTextColorKey, out TextImageColor generalTextColor, TextImageColor.Create), generalTextColor);
+                var (isGeneralOutlineColor, valueGeneralOutlineColor) = (argParser.TryGetInstance(ParamOutlineColorKey, out TextImageColor generalOutlineColor, TextImageColor.Create), generalOutlineColor);
+
+                var (isArrayLineWidth, valueArrayLineWidth) = (argParser.TryGetNumbers(ParamLineWidthsKey, out int[] arrayLineWidth), arrayLineWidth);
+                var (isArrayLineHeight, valueArrayLineHeight) = (argParser.TryGetNumbers(ParamLineHeightsKey, out int[] arrayLineHeight), arrayLineHeight);
+                var (isArrayTextSize, valueArrayTextSize) = (argParser.TryGetNumbers(ParamTextSizesKey, out float[] arrayTextSize), arrayTextSize);
+                var (isArrayOutlineSize, valueArrayOutlineSize) = (argParser.TryGetNumbers(ParamOutlineSizesKey, out float[] arrayOutlineSize), arrayOutlineSize);
+                var (isArrayTextScale, valueArrayTextScale) = (argParser.TryGetNumbers(ParamTextScalesKey, out float[] arrayTextScale), arrayTextScale);
+                var (isArrayAntialias, valueArrayAntialias) = (argParser.TryGetBools(ParamAntialiasesKey, out bool[] arrayAntialias), arrayAntialias);
+                var (isArrayFontFamily, valueArrayFontFamily) = (argParser.TryGetStrings(ParamFontFamiliesKey, out string[] arrayFontFamily), arrayFontFamily);
+                var (isArrayFontBold, valueArrayFontBold) = (argParser.TryGetBools(ParamFontBoldsKey, out bool[] arrayFontBold), arrayFontBold);
+                var (isArrayFontItalic, valueArrayFontItalic) = (argParser.TryGetBools(ParamFontItalicsKey, out bool[] arrayFontItalic), arrayFontItalic);
+                var (isArrayTextColor, valueArrayTextColor) = (argParser.TryGetInstances(ParamTextColorsKey, out TextImageColor[] arrayTextColor, TextImageColor.Create), arrayTextColor);
+                var (isArrayOutlineColor, valueArrayOutlineColor) = (argParser.TryGetInstances(ParamOutlineColorsKey, out TextImageColor[] arrayOutlineColor, TextImageColor.Create), arrayOutlineColor);
+
+                T ChoiceParam<T>(int index, T current, bool isArray, T[] valueArray, bool isGeneral, T valueGeneral)
+                {
+                    if (isArray && index < valueArray.Length)
                     {
-                        lineHeights = heights;
+                        return valueArray[index];
                     }
-                }
-                if (args.ContainsKey(ParamLineWidthsKey))
-                {
-                    var widths = args[ParamLineWidthsKey].Split(",").Select(x => int.Parse(x)).ToArray();
-                    if (0 < widths.Length)
+                    if (isGeneral)
                     {
-                        lineWidths = widths;
+                        return valueGeneral;
                     }
+                    return current;
                 }
-                if (args.ContainsKey(ParamFontKey))
-                {
-                    font = args[ParamFontKey];
-                }
-                if (args.ContainsKey(ParamTextScaleKey) && float.TryParse(args[ParamTextScaleKey], out var scaleValue))
-                {
-                    scale = scaleValue;
-                }
-                if (args.ContainsKey(ParamOutlineSizeKey) && float.TryParse(args[ParamOutlineSizeKey], out var outlineSizeValue))
-                {
-                    outlineSize = outlineSizeValue;
-                }
-                if (args.ContainsKey(ParamTextColorKey))
-                {
-                    textColor = new TextImageColor(args[ParamTextColorKey]);
-                }
-                if (args.ContainsKey(ParamOutlineColorKey))
-                {
-                    outlineColor = new TextImageColor(args[ParamOutlineColorKey]);
-                }
-                var lines = new List<TextImageLineText>();
-                foreach (var (index, lineText) in args[ParamTextKey].Replace("\r\n", "\n").Replace("\\n", "\n").Split('\n').Select((x, i) => (i, x)))
+                var lineContents = new List<TextImageLineText>();
+                foreach (var (index, lineText) in text.Replace("\r\n", "\n").Replace("\\n", "\n").Split('\n').Select((x, i) => (i, x)))
                 {
                     var lineContent = new TextImageLineText()
                     {
-                        LineText = lineText,
-                        TextSizeScale = scale,
-                        OutlineSize = outlineSize,
-                        FontFamily = font,
-                        TextColor = textColor,
-                        OutlineColor = outlineColor,
+                        Text = lineText
                     };
-                    if (index < lineHeights.Length)
-                    {
-                        lineContent.LineHeight = lineHeights[index];
-                    }
-                    if (index < lineWidths.Length)
-                    {
-                        lineContent.LineWidth = lineWidths[index];
-                    }
-                    lines.Add(lineContent);
+                    lineContent.LineWidth = ChoiceParam(index, lineContent.LineWidth, isArrayLineWidth, valueArrayLineWidth, isGeneralLineWidth, valueGeneralLineWidth);
+                    lineContent.LineHeight = ChoiceParam(index, lineContent.LineHeight, isArrayLineHeight, valueArrayLineHeight, isGeneralLineHeight, valueGeneralLineHeight);
+                    lineContent.TextSize = ChoiceParam(index, lineContent.TextSize, isArrayTextSize, valueArrayTextSize, isGeneralTextSize, valueGeneralTextSize);
+                    lineContent.OutlineSize = ChoiceParam(index, lineContent.OutlineSize, isArrayOutlineSize, valueArrayOutlineSize, isGeneralOutlineSize, valueGeneralOutlineSize);
+                    lineContent.TextScale = ChoiceParam(index, lineContent.TextScale, isArrayTextScale, valueArrayTextScale, isGeneralTextScale, valueGeneralTextScale);
+                    lineContent.Antialias = ChoiceParam(index, lineContent.Antialias, isArrayAntialias, valueArrayAntialias, isGeneralAntialias, valueGeneralAntialias);
+                    lineContent.FontFamily = ChoiceParam(index, lineContent.FontFamily, isArrayFontFamily, valueArrayFontFamily, isGeneralFontFamily, valueGeneralFontFamily);
+                    lineContent.FontBold = ChoiceParam(index, lineContent.FontBold, isArrayFontBold, valueArrayFontBold, isGeneralFontBold, valueGeneralFontBold);
+                    lineContent.FontItalic = ChoiceParam(index, lineContent.FontItalic, isArrayFontItalic, valueArrayFontItalic, isGeneralFontItalic, valueGeneralFontItalic);
+                    lineContent.TextColor = ChoiceParam(index, lineContent.TextColor, isArrayTextColor, valueArrayTextColor, isGeneralTextColor, valueGeneralTextColor);
+                    lineContent.OutlineColor = ChoiceParam(index, lineContent.OutlineColor, isArrayOutlineColor, valueArrayOutlineColor, isGeneralOutlineColor, valueGeneralOutlineColor);
+                    lineContents.Add(lineContent);
                 }
-                content.Lines = lines.ToArray();
+                content.Lines = lineContents.ToArray();
             }
-            if (args.ContainsKey(ParamColorTypeKey))
-            {
-                content.ColorType = args[ParamColorTypeKey];
-            }
-            if (args.ContainsKey(ParamAlphaTypeKey))
-            {
-                content.AlphaType = args[ParamAlphaTypeKey];
-            }
-            if (args.ContainsKey(ParamFormatKey))
-            {
-                content.EncodeFormat = args[ParamFormatKey];
-            }
-            if (args.ContainsKey(ParamQualityKey) && int.TryParse(args[ParamQualityKey], out int quality))
-            {
-                content.EncodeQuality = quality;
-            }
-            if (args.ContainsKey(ParamBackgroundColorKey))
-            {
-                content.BackgroundColor = new TextImageColor(args[ParamBackgroundColorKey]);
-            }
+            // Generate
             TextImageGenerator.GenerateFile(outputPath, content);
+            return 0;
         }
 
         static Dictionary<string, string> ParseArgs()
