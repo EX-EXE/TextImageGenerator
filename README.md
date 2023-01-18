@@ -18,7 +18,6 @@ TextImageGenerator.App.exe -Output:./Test.png -Text:TestText -Width:512 -Height:
 |Format|Image Format[png or jpg]|-Format:png|
 |Quality|Jpg Quality|-Quality:100|
 |BackgroundColor|[RGBA]|-BackgroundColor:00000000|
-
 |LineWidth||-LineWidth:|
 |LineHeight||-LineHeight:|
 |TextSize||-TextSize:|
@@ -30,7 +29,6 @@ TextImageGenerator.App.exe -Output:./Test.png -Text:TestText -Width:512 -Height:
 |FontItalic||-FontItalic:|
 |TextColor|[RGBA]|-TextColor:FFFFFFFF|
 |OutlineColor|[RGBA]|-OutlineColor:000000FF|
-
 |LineWidths||-LineWidths:|
 |LineHeights||-LineHeights:|
 |TextSizes||-TextSizes:|
