@@ -12,9 +12,9 @@ namespace TextImageGenerator.Test
                 EncodeFormat = "png",
                 Lines = new[]
                 {
-                    new TextImageLineText(){ LineText = "‚ ‚¢‚¤‚¦‚¨",FontFamily="Meiryo"},
-                    new TextImageLineText(){ LineText = "ABCDE"},
-                    new TextImageLineText(){ LineText = "0123456789"},
+                    new TextImageLineText(){ Text = "‚ ‚¢‚¤‚¦‚¨",FontFamily="Meiryo"},
+                    new TextImageLineText(){ Text = "ABCDE"},
+                    new TextImageLineText(){ Text = "0123456789"},
                 }
             };
             var tmpPath = System.IO.Path.GetTempFileName();
