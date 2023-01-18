@@ -3,7 +3,7 @@ Generates an image file with text.(PNG/JPG)
 
 # How To Use
 ```
-TextImageGenerator.App.exe -Output:./Test.png -Text:TestText -Width:512 -Height:512
+TextImageGenerator.exe -Output:./Test.png -Text:TestText -Width:512 -Height:512
 ```
 
 ## Parameter
