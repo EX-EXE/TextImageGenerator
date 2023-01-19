@@ -7,28 +7,28 @@ TextImageGenerator.exe -Output:./Test.png -Text:TestText -Width:512 -Height:512
 ```
 
 ## Parameter
-| Parameter | Description | Example |
+| Parameter | Required | Example |
 |---|---|---|
-|Output|Destination for image file.|-Output:./Test.png|
-|Width|Image width|-Width:1024|
-|Height|Image width|-Height:1024|
-|Text|Text to write to the image.[new line is \n]|-Text:ABCDE\nあいうえお\n01234|
+|Output|✓|-Output:./Test.png|
+|Width|✓|-Width:1024|
+|Height|✓|-Height:1024|
+|Text<br>[new line is \n]|✓|-Text:ABCDE\nあいうえお\n01234|
 |ColorType||-ColorType:Bgra8888|
 |AlphaType||-AlphaType:Premul|
-|Format|Image Format[png or jpg]|-Format:png|
-|Quality|Jpg Quality|-Quality:100|
-|BackgroundColor|[RGBA]|-BackgroundColor:00000000|
+|Format<br>[png or jpg]||-Format:png|
+|Quality||-Quality:100|
+|BackgroundColor<br>[RGBA]||-BackgroundColor:00000000|
 |LineWidth<br>LineWidthArray||-LineWidth:128<br>-LineWidthArray:128,256,128|
 |LineHeight<br>LineHeightArray||-LineHeight:128<br>-LineHeightArray:128,256,128|
-|TextSize<br>TextSizeArray|TextSize|-TextSize:20.0|
-|OutlineSize<br>OutlineSizeArray|OutlineSize|-OutlineSize:2.5|
-|TextScale<br>TextScaleArray|TextScale|-TextScale:0.9|
-|Antialias<br>AntialiasArray|Enable Antialias|-Antialias:1<br>-Antialias:false|
-|FontFamily<br>FontFamilyArray|FontFamily|-FontFamily:Meiryo|
-|FontBold<br>FontBoldArray|Enable Bold|-FontBold:0|
-|FontItalic<br>FontItalicArray|Enable Italic|-FontItalic:true|
-|TextColor<br>TextColorArray|[RGBA]|-TextColor:FFFFFFFF|
-|OutlineColor<br>OutlineColorArray|[RGBA]|-OutlineColor:000000FF|
+|TextSize<br>TextSizeArray||-TextSize:20.0|
+|OutlineSize<br>OutlineSizeArray||-OutlineSize:2.5|
+|TextScale<br>TextScaleArray||-TextScale:0.9|
+|Antialias<br>AntialiasArray||-Antialias:1<br>-Antialias:false|
+|FontFamily<br>FontFamilyArray||-FontFamily:Meiryo|
+|FontBold<br>FontBoldArray||-FontBold:0|
+|FontItalic<br>FontItalicArray||-FontItalic:true|
+|TextColor<br>TextColorArray<br>[RGBA]||-TextColor:FFFFFFFF|
+|OutlineColor<br>OutlineColorArray<br>[RGBA]||-OutlineColor:000000FF|
 
 
 # Dependent library
