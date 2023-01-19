@@ -22,6 +22,7 @@ namespace TextImageGenerator.App
 
         public static void WriteLine()
         {
+            Console.WriteLine("[Licence]");
             Console.WriteLine(SkiaSharp);
         }
     }

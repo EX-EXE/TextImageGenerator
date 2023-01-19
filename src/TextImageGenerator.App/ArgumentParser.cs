@@ -36,6 +36,15 @@ namespace TextImageGenerator.App
             }
         }
 
+        public void OutputParameter()
+        {
+            Console.WriteLine("----- Parameter -----");
+            foreach(var key in keyValues.Keys.OrderBy(x => x))
+            {
+                Console.WriteLine($"{key} {keyValues[key].Trim()}");
+            }
+        }
+
         public bool ContainsKey(ReadOnlySpan<char> key)
         {
             return keyValues.ContainsKey(key.ToString());
