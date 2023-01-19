@@ -5,12 +5,13 @@ Generates an image file with text.(PNG/JPG)
 ```
 TextImageGenerator.exe -Output:./Test.png -Text:TestText -Width:512 -Height:512
 ```
-![Test](https://user-images.githubusercontent.com/114784289/213452417-87ad6b1f-c580-451c-8800-48d208ee3bcc.png)
+<img src="https://user-images.githubusercontent.com/114784289/213452417-87ad6b1f-c580-451c-8800-48d208ee3bcc.png" width="256">
 
 ```
 TextImageGenerator.exe -Output:./Test2.png -Text:Bold\nItalic\nOutline -FontBoldArray:true,false,false -FontItalicArray:false,true,false -OutlineSizeArray:0,0,5 -TextScale:0.9 -Width:500 -Height:600 -BackgroundColor:222222FF -TextColorArray:AA0000FF,00BB00FF,0000CCFF -OutlineColor:FFFFFFFF
 ```
-![Test2](https://user-images.githubusercontent.com/114784289/213452427-b30ca844-6845-481b-97d0-e3c302658f4a.png)
+
+<img src="https://user-images.githubusercontent.com/114784289/213452427-b30ca844-6845-481b-97d0-e3c302658f4a.png" width="256">
 
 ## Parameter
 | Parameter | Required | Example |
