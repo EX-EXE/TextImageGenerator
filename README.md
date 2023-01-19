@@ -18,28 +18,17 @@ TextImageGenerator.exe -Output:./Test.png -Text:TestText -Width:512 -Height:512
 |Format|Image Format[png or jpg]|-Format:png|
 |Quality|Jpg Quality|-Quality:100|
 |BackgroundColor|[RGBA]|-BackgroundColor:00000000|
-|LineWidth||-LineWidth:|
-|LineHeight||-LineHeight:|
-|TextSize||-TextSize:|
-|OutlineSize||-OutlineSize:|
-|TextScale||-TextScale:|
-|Antialias||-Antialias:|
-|FontFamily||-FontFamily:Meiryo|
-|FontBold||-FontBold:|
-|FontItalic||-FontItalic:|
-|TextColor|[RGBA]|-TextColor:FFFFFFFF|
-|OutlineColor|[RGBA]|-OutlineColor:000000FF|
-|LineWidths||-LineWidths:|
-|LineHeights||-LineHeights:|
-|TextSizes||-TextSizes:|
-|OutlineSizes||-OutlineSizes:|
-|TextScales||-TextScales:|
-|Antialiases||-Antialiases:|
-|FontFamilies||-FontFamilies:Meiryo,Meiryo,Meiryo|
-|FontBolds||-FontBolds:|
-|FontItalics||-FontItalics:|
-|TextColors|[RGBA]|-TextColors:FFFFFFFF,FFFFFFFF,FFFFFFFF|
-|OutlineColors|[RGBA]|-OutlineColors:000000FF,000000FF,000000FF|
+|LineWidth<br>LineWidthArray||-LineWidth:128<br>-LineWidthArray:128,256,128|
+|LineHeight<br>LineHeightArray||-LineHeight:128<br>-LineHeightArray:128,256,128|
+|TextSize<br>TextSizeArray|TextSize|-TextSize:20.0|
+|OutlineSize<br>OutlineSizeArray|OutlineSize|-OutlineSize:2.5|
+|TextScale<br>TextScaleArray|TextScale|-TextScale:0.9|
+|Antialias<br>AntialiasArray|Enable Antialias|-Antialias:1<br>-Antialias:false|
+|FontFamily<br>FontFamilyArray|FontFamily|-FontFamily:Meiryo|
+|FontBold<br>FontBoldArray|Enable Bold|-FontBold:0|
+|FontItalic<br>FontItalicArray|Enable Italic|-FontItalic:true|
+|TextColor<br>TextColorArray|[RGBA]|-TextColor:FFFFFFFF|
+|OutlineColor<br>OutlineColorArray|[RGBA]|-OutlineColor:000000FF|
 
 
 # Dependent library
