@@ -12,7 +12,7 @@ namespace TextImageGenerator.Test
                 EncodeFormat = "png",
                 Lines = new[]
                 {
-                    new TextImageLineText(){ Text = "‚ ‚¢‚¤‚¦‚¨",FontFamily="Meiryo"},
+                    new TextImageLineText(){ Text = "‚ ‚¢‚¤‚¦‚¨",FontFamily=""},
                     new TextImageLineText(){ Text = "ABCDE"},
                     new TextImageLineText(){ Text = "0123456789"},
                 }
