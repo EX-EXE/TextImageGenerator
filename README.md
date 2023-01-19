@@ -13,6 +13,12 @@ TextImageGenerator.exe -Output:./Test2.png -Text:Bold\nItalic\nOutline -FontBold
 
 <img src="https://user-images.githubusercontent.com/114784289/213452427-b30ca844-6845-481b-97d0-e3c302658f4a.png" width="256">
 
+```
+TextImageGenerator.exe -Output:./Test3.png -Width:300 -Height:300 -Text:Yu Gothic\nMeiryo\nMS Gothic -FontFamilyArray:Yu Gothic,Meiryo,MS Gothic -TextScale:0.9 -TextSizeArray:80,40,20
+```
+
+<img src="https://user-images.githubusercontent.com/114784289/213477687-c81871a0-2779-44e9-892e-c0ead9056358.png" width="256">
+
 ## Parameter
 | Parameter | Required | Example |
 |---|---|---|
