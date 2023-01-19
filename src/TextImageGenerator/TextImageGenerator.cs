@@ -110,6 +110,10 @@ namespace TextImageGenerator
                     fontFamily = SKTypeface.Default.FamilyName;
                 }
                 var fontType = SKTypeface.FromFamilyName(fontFamily, fontStyle);
+                if (!fontFamily.Equals(fontType.FamilyName, StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new Exception($"Failed load font type. : {fontFamily}");
+                }
 
                 // Color
                 var textColor = new SKColor(lineContent.TextColor.Red, lineContent.TextColor.Green, lineContent.TextColor.Blue, lineContent.TextColor.Alpha);
