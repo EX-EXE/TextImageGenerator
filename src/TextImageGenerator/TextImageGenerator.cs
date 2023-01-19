@@ -104,7 +104,12 @@ namespace TextImageGenerator
                 {
                     fontStyle = SKFontStyle.Italic;
                 }
-                var fontType = string.IsNullOrEmpty(lineContent.FontFamily) ? SKTypeface.CreateDefault() : SKTypeface.FromFamilyName(lineContent.FontFamily, fontStyle);
+                var fontFamily = lineContent.FontFamily;
+                if (string.IsNullOrEmpty(fontFamily))
+                {
+                    fontFamily = SKTypeface.Default.FamilyName;
+                }
+                var fontType = SKTypeface.FromFamilyName(fontFamily, fontStyle);
 
                 // Color
                 var textColor = new SKColor(lineContent.TextColor.Red, lineContent.TextColor.Green, lineContent.TextColor.Blue, lineContent.TextColor.Alpha);
