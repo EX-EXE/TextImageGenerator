@@ -37,20 +37,20 @@ namespace TextImageGenerator.App
         static readonly string ParamOutlineColorKey = "-OutlineColor:";
 
         // Array
-        static readonly string ParamLineWidthsKey = "-LineWidths:";
-        static readonly string ParamLineHeightsKey = "-LineHeights:";
+        static readonly string ParamLineWidthArrayKey = "-LineWidthArray:";
+        static readonly string ParamLineHeightArrayKey = "-LineHeightArray:";
 
-        static readonly string ParamTextSizesKey = "-TextSizes:";
-        static readonly string ParamOutlineSizesKey = "-OutlineSizes:";
-        static readonly string ParamTextScalesKey = "-TextScales:";
+        static readonly string ParamTextSizeArrayKey = "-TextSizeArray:";
+        static readonly string ParamOutlineSizeArrayKey = "-OutlineSizeArray:";
+        static readonly string ParamTextScaleArrayKey = "-TextScaleArray:";
 
-        static readonly string ParamAntialiasesKey = "-Antialiases:";
-        static readonly string ParamFontFamiliesKey = "-FontFamilies:";
-        static readonly string ParamFontBoldsKey = "-FontBolds:";
-        static readonly string ParamFontItalicsKey = "-FontItalics:";
+        static readonly string ParamAntialiasArrayKey = "-AntialiasArray:";
+        static readonly string ParamFontFamilyArrayKey = "-FontFamilyArray:";
+        static readonly string ParamFontBoldArrayKey = "-FontBoldArray:";
+        static readonly string ParamFontItalicArrayKey = "-FontItalicArray:";
 
-        static readonly string ParamTextColorsKey = "-TextColors:";
-        static readonly string ParamOutlineColorsKey = "-OutlineColors:";
+        static readonly string ParamTextColorsKey = "-TextColorArray:";
+        static readonly string ParamOutlineColorArrayKey = "-OutlineColorArray:";
 
 
 
@@ -80,23 +80,24 @@ namespace TextImageGenerator.App
             ParamTextColorKey,
             ParamOutlineColorKey,
 
-            ParamLineWidthsKey,
-            ParamLineHeightsKey,
-            ParamTextSizesKey,
-            ParamOutlineSizesKey,
-            ParamTextScalesKey,
-            ParamAntialiasesKey,
-            ParamFontFamiliesKey,
-            ParamFontBoldsKey,
-            ParamFontItalicsKey,
+            ParamLineWidthArrayKey,
+            ParamLineHeightArrayKey,
+            ParamTextSizeArrayKey,
+            ParamOutlineSizeArrayKey,
+            ParamTextScaleArrayKey,
+            ParamAntialiasArrayKey,
+            ParamFontFamilyArrayKey,
+            ParamFontBoldArrayKey,
+            ParamFontItalicArrayKey,
             ParamTextColorsKey,
-            ParamOutlineColorsKey,
+            ParamOutlineColorArrayKey,
         };
 
         static int Main()
         {
             var argParser = new ArgumentParser();
             argParser.Init(Environment.CommandLine, ParamKeys);
+            argParser.OutputParameter();
 
             var args = ParseArgs();
             if (argParser.ContainsKey(ParamLicenceKey))
@@ -181,17 +182,17 @@ namespace TextImageGenerator.App
                 var (isGeneralTextColor, valueGeneralTextColor) = (argParser.TryGetInstance(ParamTextColorKey, out TextImageColor generalTextColor, TextImageColor.Create), generalTextColor);
                 var (isGeneralOutlineColor, valueGeneralOutlineColor) = (argParser.TryGetInstance(ParamOutlineColorKey, out TextImageColor generalOutlineColor, TextImageColor.Create), generalOutlineColor);
 
-                var (isArrayLineWidth, valueArrayLineWidth) = (argParser.TryGetNumbers(ParamLineWidthsKey, out int[] arrayLineWidth), arrayLineWidth);
-                var (isArrayLineHeight, valueArrayLineHeight) = (argParser.TryGetNumbers(ParamLineHeightsKey, out int[] arrayLineHeight), arrayLineHeight);
-                var (isArrayTextSize, valueArrayTextSize) = (argParser.TryGetNumbers(ParamTextSizesKey, out float[] arrayTextSize), arrayTextSize);
-                var (isArrayOutlineSize, valueArrayOutlineSize) = (argParser.TryGetNumbers(ParamOutlineSizesKey, out float[] arrayOutlineSize), arrayOutlineSize);
-                var (isArrayTextScale, valueArrayTextScale) = (argParser.TryGetNumbers(ParamTextScalesKey, out float[] arrayTextScale), arrayTextScale);
-                var (isArrayAntialias, valueArrayAntialias) = (argParser.TryGetBools(ParamAntialiasesKey, out bool[] arrayAntialias), arrayAntialias);
-                var (isArrayFontFamily, valueArrayFontFamily) = (argParser.TryGetStrings(ParamFontFamiliesKey, out string[] arrayFontFamily), arrayFontFamily);
-                var (isArrayFontBold, valueArrayFontBold) = (argParser.TryGetBools(ParamFontBoldsKey, out bool[] arrayFontBold), arrayFontBold);
-                var (isArrayFontItalic, valueArrayFontItalic) = (argParser.TryGetBools(ParamFontItalicsKey, out bool[] arrayFontItalic), arrayFontItalic);
+                var (isArrayLineWidth, valueArrayLineWidth) = (argParser.TryGetNumbers(ParamLineWidthArrayKey, out int[] arrayLineWidth), arrayLineWidth);
+                var (isArrayLineHeight, valueArrayLineHeight) = (argParser.TryGetNumbers(ParamLineHeightArrayKey, out int[] arrayLineHeight), arrayLineHeight);
+                var (isArrayTextSize, valueArrayTextSize) = (argParser.TryGetNumbers(ParamTextSizeArrayKey, out float[] arrayTextSize), arrayTextSize);
+                var (isArrayOutlineSize, valueArrayOutlineSize) = (argParser.TryGetNumbers(ParamOutlineSizeArrayKey, out float[] arrayOutlineSize), arrayOutlineSize);
+                var (isArrayTextScale, valueArrayTextScale) = (argParser.TryGetNumbers(ParamTextScaleArrayKey, out float[] arrayTextScale), arrayTextScale);
+                var (isArrayAntialias, valueArrayAntialias) = (argParser.TryGetBools(ParamAntialiasArrayKey, out bool[] arrayAntialias), arrayAntialias);
+                var (isArrayFontFamily, valueArrayFontFamily) = (argParser.TryGetStrings(ParamFontFamilyArrayKey, out string[] arrayFontFamily), arrayFontFamily);
+                var (isArrayFontBold, valueArrayFontBold) = (argParser.TryGetBools(ParamFontBoldArrayKey, out bool[] arrayFontBold), arrayFontBold);
+                var (isArrayFontItalic, valueArrayFontItalic) = (argParser.TryGetBools(ParamFontItalicArrayKey, out bool[] arrayFontItalic), arrayFontItalic);
                 var (isArrayTextColor, valueArrayTextColor) = (argParser.TryGetInstances(ParamTextColorsKey, out TextImageColor[] arrayTextColor, TextImageColor.Create), arrayTextColor);
-                var (isArrayOutlineColor, valueArrayOutlineColor) = (argParser.TryGetInstances(ParamOutlineColorsKey, out TextImageColor[] arrayOutlineColor, TextImageColor.Create), arrayOutlineColor);
+                var (isArrayOutlineColor, valueArrayOutlineColor) = (argParser.TryGetInstances(ParamOutlineColorArrayKey, out TextImageColor[] arrayOutlineColor, TextImageColor.Create), arrayOutlineColor);
 
                 T ChoiceParam<T>(int index, T current, bool isArray, T[] valueArray, bool isGeneral, T valueGeneral)
                 {
