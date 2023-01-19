@@ -143,7 +143,10 @@ namespace TextImageGenerator
                 outlinePaint.MeasureText(lineContent.Text, ref previewTextBounds);
 
                 // Draw
-                canvas.DrawText(lineContent.Text, midX - previewTextBounds.MidX, lineMidY - previewTextBounds.MidY, outlinePaint);
+                if (0.0f < lineContent.OutlineSize)
+                {
+                    canvas.DrawText(lineContent.Text, midX - previewTextBounds.MidX, lineMidY - previewTextBounds.MidY, outlinePaint);
+                }
                 canvas.DrawText(lineContent.Text, midX - previewTextBounds.MidX, lineMidY - previewTextBounds.MidY, textPaint);
             }
         }
