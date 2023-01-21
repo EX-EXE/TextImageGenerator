@@ -15,6 +15,7 @@ on:
 env:
   VERSION: ${{ github.event.inputs.version }}
   RELEASE: ${{ github.event.inputs.release }}
+  UPLOAD_NAME: "Upload"
   PUBLISH_DIR: "/tmp/publish/"
   APP_NAME: "TextImageGenerator"
   ASSEMBLY_NAME: "TextImageGenerator.App"
@@ -78,7 +79,7 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
-          name: PublishFiles
+          name: ${{ env.UPLOAD_NAME }}
           path: ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.upload }}
            
 
@@ -117,19 +118,16 @@ jobs:
         uses: actions/download-artifact@v3
         id: download_asset
         with:
-          name: ${{ env.RUNTIME }}
-          path: /tmp/release/${{ env.RUNTIME }}/ 
+          name: ${{ env.UPLOAD_NAME }}
+          path: /tmp/release/${{ env.UPLOAD_NAME }}/ 
 
       - name: Upload Release Asset
         id: upload-release-asset 
-        uses: actions/upload-release-asset@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.download_asset.outputs.download-path }}/TextImageGenerator.App.exe
-          asset_name: TextImageGenerator.exe
-          asset_content_type: application/octet-stream
+          files: /tmp/release/${{ env.UPLOAD_NAME }}/*
 
 #      - name: Zip Release Asset
 #        id: zip-release-asset 
