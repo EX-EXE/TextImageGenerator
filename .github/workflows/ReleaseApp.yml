@@ -46,6 +46,10 @@ jobs:
     - name: Publish
       run: dotnet publish ./src/TextImageGenerator.App/ -c release --self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o /tmp/publish/${{ matrix.runtime }}/
       
+    - name: Display Publish Directory
+      run: |
+           ls /tmp/publish/${{ matrix.runtime }}/ 
+
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
