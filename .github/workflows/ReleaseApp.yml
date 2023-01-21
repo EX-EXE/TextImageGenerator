@@ -15,11 +15,19 @@ on:
 env:
   VERSION: ${{ github.event.inputs.version }}
   RELEASE: ${{ github.event.inputs.release }}
-  RUNTIME: "win-x64"
 
 jobs:
   build:
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - platform: "windows-latest"
+            runtime: "win-x64"
+          - platform: "macos-latest"
+            runtime: "osx-x64"
+          - platform: "ubuntu-latest"
+            runtime: "linux-x64"
+    runs-on: ${{ matrix.platform }}
     
     steps:
     - name: Checkout
@@ -36,13 +44,13 @@ jobs:
       run: dotnet restore
       
     - name: Publish
-      run: dotnet publish ./src/TextImageGenerator.App/ -c release --self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:Version=${{ env.VERSION }} -r ${{ env.RUNTIME }} -o /tmp/publish/${{ env.RUNTIME }}/
+      run: dotnet publish ./src/TextImageGenerator.App/ -c release --self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o /tmp/publish/${{ matrix.runtime }}/
       
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
-          name: ${{ env.RUNTIME }}
-          path: /tmp/publish/${{ env.RUNTIME }}/ 
+          name: ${{ matrix.runtime }}
+          path: /tmp/publish/${{ matrix.runtime }}/ 
            
 
   release:
