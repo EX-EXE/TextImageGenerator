@@ -15,6 +15,9 @@ on:
 env:
   VERSION: ${{ github.event.inputs.version }}
   RELEASE: ${{ github.event.inputs.release }}
+  PUBLISH_DIR: "/tmp/publish/"
+  APP_NAME: "TextImageGenerator"
+  ASSEMBLY_NAME: "TextImageGenerator.App"
 
 jobs:
   build:
@@ -23,10 +26,16 @@ jobs:
         include:
           - platform: "windows-latest"
             runtime: "win-x64"
+            publish: ${{ env.ASSEMBLY_NAME }}.exe
+            upload: ${{ env.ASSEMBLY_NAME }}.win-x64.exe
           - platform: "macos-latest"
             runtime: "osx-x64"
+            publish: ${{ env.ASSEMBLY_NAME }}
+            upload: ${{ env.ASSEMBLY_NAME }}.osx-x64
           - platform: "ubuntu-latest"
             runtime: "linux-x64"
+            publish: ${{ env.ASSEMBLY_NAME }}
+            upload: ${{ env.ASSEMBLY_NAME }}.linux-x64
     runs-on: ${{ matrix.platform }}
     
     steps:
@@ -44,17 +53,21 @@ jobs:
       run: dotnet restore
       
     - name: Publish
-      run: dotnet publish ./src/TextImageGenerator.App/ -c release --self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o /tmp/publish/${{ matrix.runtime }}/
+      run: dotnet publish ./src/${{ env.ASSEMBLY_NAME }}/ -c release --self-contained -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -p:Version=${{ env.VERSION }} -r ${{ matrix.runtime }} -o ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/
       
     - name: Display Publish Directory
       run: |
-           ls /tmp/publish/${{ matrix.runtime }}/ 
+           ls ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/ 
+           
+    - name: Rename
+      run: |
+           mv ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.publish }} ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.upload }}
 
     - name: Upload
       uses: actions/upload-artifact@v3
       with:
-          name: ${{ matrix.runtime }}
-          path: /tmp/publish/${{ matrix.runtime }}/ 
+          name: PublishFiles
+          path: ${{ env.PUBLISH_DIR }}${{ matrix.runtime }}/${{ matrix.upload }}
            
 
   release:
