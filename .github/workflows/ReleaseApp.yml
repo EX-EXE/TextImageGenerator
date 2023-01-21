@@ -128,6 +128,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: /tmp/release/${{ env.UPLOAD_NAME }}/*
+          tag_name: ${{ env.VERSION }}
 
 #      - name: Zip Release Asset
 #        id: zip-release-asset 
