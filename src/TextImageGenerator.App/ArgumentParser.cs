@@ -111,7 +111,11 @@ namespace TextImageGenerator.App
         {
             if (TryGetString(key, out var value))
             {
-                return T.TryParse(value, null, out param);
+                if (T.TryParse(value, null, out var parse))
+                {
+                    param = parse;
+                    return true;
+                }
             }
             param = T.Zero;
             return false;
