@@ -1,3 +1,4 @@
+[![NuGet version](https://badge.fury.io/nu/TextImageGenerator.svg)](https://badge.fury.io/nu/TextImageGenerator)
 # TextImageGenerator
 Generates an image file with text.(PNG/JPG)
 
@@ -42,7 +43,6 @@ TextImageGenerator.exe -Output:./Test3.png -Width:300 -Height:300 -Text:Yu Gothi
 |FontItalic<br>FontItalicArray||-FontItalic:true|
 |TextColor<br>TextColorArray<br>[RGBA]||-TextColor:FFFFFFFF|
 |OutlineColor<br>OutlineColorArray<br>[RGBA]||-OutlineColor:000000FF|
-
 
 # Dependent library
 [mono/SkiaSharp](https://github.com/mono/SkiaSharp)
