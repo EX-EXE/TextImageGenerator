@@ -93,27 +93,6 @@ jobs:
         with:
           fetch-depth: 0
           
-      - name: Create GitTag
-        run: git tag Release/${{ env.VERSION }}
-        
-      - name: Push GitTag
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          tags: true
-          
-      - name: Create Release
-        uses: actions/create-release@v1
-        id: create_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: Release/${{ env.VERSION }}
-          release_name: TextImageGenerator Ver.${{ env.VERSION }}
-          draft: true
-          prerelease: false
-          
       - name: Download Release Asset
         uses: actions/download-artifact@v3
         id: download_asset
@@ -127,8 +106,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          name: ${{ env.APP_NAME }} Ver.${{ env.VERSION }}
           files: /tmp/release/${{ env.UPLOAD_NAME }}/*
-          tag_name: ${{ env.VERSION }}
+          tag_name: Release/${{ env.VERSION }}
 
 #      - name: Zip Release Asset
 #        id: zip-release-asset 
