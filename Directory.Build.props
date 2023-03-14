@@ -10,5 +10,6 @@
     <RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>Generates an image file with text.(PNG/JPG)</Description>
   </PropertyGroup>
 </Project>
