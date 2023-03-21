@@ -228,8 +228,28 @@ namespace TextImageGenerator.App
                 }
                 content.Lines = lineContents.ToArray();
             }
+
             // Generate
-            TextImageGenerator.GenerateFile(outputPath, content);
+            //if (System.IO.Path.GetExtension(outputPath).Equals(".bmp", StringComparison.OrdinalIgnoreCase))
+            if (content.EncodeFormat.Equals("bmp", StringComparison.OrdinalIgnoreCase))
+            {
+                var colorBytes = TextImageGenerator.GenerateColorBytes(content).AsSpan();
+
+                var writer = new BitmapWriter.BitmapWriter(content.ImageWidth, content.ImageHeight);
+                foreach (var y in Enumerable.Range(0, content.ImageHeight))
+                {
+                    foreach (var x in Enumerable.Range(0, content.ImageWidth))
+                    {
+                        var pixelData = colorBytes.Slice(x * 4 + y * (content.ImageWidth * 4), 4);
+                        writer.SetPixel(x, y, pixelData[2], pixelData[1], pixelData[0]);
+                    }
+                }
+                writer.SaveColorImage(outputPath);
+            }
+            else
+            {
+                TextImageGenerator.GenerateFile(outputPath, content);
+            }
             return 0;
         }
 

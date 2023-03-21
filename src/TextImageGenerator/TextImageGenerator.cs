@@ -68,6 +68,14 @@ namespace TextImageGenerator
             }
         }
 
+        public static byte[] GenerateColorBytes(TextImageContent content)
+        {
+            // Create
+            using var bitmap = new SKBitmap(content.ImageWidth, content.ImageHeight, ConvertColorType(content.ColorType), ConvertAlphaType(content.AlphaType));
+            DrawContent(bitmap, content);
+            return bitmap.GetPixelSpan().ToArray();
+        }
+
         private static void DrawContent(SKBitmap bitmap, TextImageContent content)
         {
             using var canvas = new SKCanvas(bitmap);
